@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">My First Application</string>
+    <string name="usernameLayout">User</string>
+    <string name="passwordLayout">Password</string>
+    <string name="loginButton">Sing in</string>
+    <string name="error">Incorrect format</string>
+    <string name="accept">Accept</string>
+    <string name="title">Login</string>
+    <string name="title_Ok">Successful Login</string>
+    <string name="title_Ko">Wrong Login</string>
+    <string name="supporting_text_Ok">Your username and password are correct</string>
+    <string name="supporting_text_Ko">Please check your username and password again</string>
+    <string name="button1">Google</string>
+    <string name="button2">Microsoft</string>
+    <string name="button3">Apple</string>
+    <string name="button4">SM Educamos</string>
+    <string name="button5">SM Aprendizaje Plus</string>
+    <string name="subtitle">Forgot password</string>
+    <string name="subtitle1">Login with your username:</string>
+    <string name="subtitle2">Remember that you can also access through:</string>
+    <string name="checkBox">Accept terms and conditions</string>
+    <string name="welcome_messages">You pressed the button %1$s</string>
+</resources>

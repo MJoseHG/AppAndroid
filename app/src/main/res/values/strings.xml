@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">My First Application</string>
+    <string name="usernameLayout">Usuario o email</string>
+    <string name="passwordLayout">Contraseña</string>
+    <string name="loginButton">Entrar</string>
+    <string name="error">Formato incorrecto</string>
+    <string name="accept">Aceptar</string>
+    <string name="title">Iniciar Sesión</string>
+    <string name="title_Ok">Login correcto</string>
+    <string name="title_Ko">Login erróneo</string>
+    <string name="supporting_text_Ok">Tu usuario y contraseña son correctos</string>
+    <string name="supporting_text_Ko">Comprueba de nuevo el usuario y la contraseña</string>
+    <string name="button1">Google</string>
+    <string name="button2">Microsoft</string>
+    <string name="button3">Apple</string>
+    <string name="button4">SM Educamos</string>
+    <string name="button5">SM Aprendizaje Plus</string>
+    <string name="subtitle">No recuerdo mi contraseña</string>
+    <string name="subtitle1">Iniciar sesión con tu usuario de:</string>
+    <string name="subtitle2">Recuerda que también puedes entrar a través de:</string>
+    <string name="checkBox">Aceptar términos y condiciones</string>
+    <string name="welcome_messages">Has pulsado el botón %1$s</string>
+</resources>
