@@ -18,7 +18,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import java.net.URL
 
 class MainActivity : AppCompatActivity() {
     private var usernameTil: TextInputLayout? = null
