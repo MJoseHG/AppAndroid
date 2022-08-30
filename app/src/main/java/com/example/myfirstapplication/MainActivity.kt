@@ -3,7 +3,12 @@ package com.example.myfirstapplication
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.text.*
+import android.text.Editable
+import android.text.SpannableStringBuilder
+import android.text.TextPaint
+import android.text.TextWatcher
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.view.View
 import android.widget.Button
 import android.widget.CheckBox
@@ -13,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import java.net.URL
 
 class MainActivity : AppCompatActivity() {
     private var usernameTil: TextInputLayout? = null
@@ -51,6 +57,8 @@ class MainActivity : AppCompatActivity() {
         button04 = findViewById<View>(R.id.button4) as Button
         button05 = findViewById<View>(R.id.button5) as Button
 
+        configTermsOfUse()
+
         usernameTie!!.addTextChangedListener(object : TextWatcher {
 
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
@@ -58,6 +66,7 @@ class MainActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
 
             override fun afterTextChanged(s: Editable) {
+                usernameTil!!.error = null
                 notEmptyText()
             }
 
@@ -70,15 +79,13 @@ class MainActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
 
             override fun afterTextChanged(s: Editable) {
+                passwordTil!!.error = null
                 notEmptyText()
             }
         })
 
         clickText!!.setOnClickListener {
-            val url = "https://es.dragon-ball-official.com/"
-            val i = Intent(Intent.ACTION_VIEW)
-            i.data = Uri.parse(url)
-            startActivity(i)
+            openUrl(url = getString(R.string.url_forgot_password))
         }
 
         checkButton!!.setOnCheckedChangeListener { _, isChecked ->
@@ -108,30 +115,31 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    private fun configTermsOfUse() {
-        val spanTest = SpannableStringBuilder()
-        spanText.append(getString(R.string.checkBox))
+    private fun openUrl(url: String) {
+        val i = Intent(Intent.ACTION_VIEW)
+        i.data = Uri.parse(url)
+        startActivity(i)
     }
 
-//    private fun configTermsOfUse() {
-//        val spanText = SpannableStringBuilder()
-//        spanText.append(getString(R.string.login_agree_terms_privacy1))
-//        val terms2 = getString(R.string.login_agree_terms_privacy2)
-//        spanText.append(terms2)
-//        spanText.setSpan(object : ClickableSpan() {
-//            override fun onClick(widget: View) {
-//                presenter.onOpenUrl(getString(R.string.url_privacy_politics))
-//            }
-//
-//            override fun updateDrawState(textPaint: TextPaint) {
-//                textPaint.color = getColor(R.color.colorPrimaryDark)
-//                textPaint.isUnderlineText = false
-//            }
-//        }, spanText.length - terms2.length, spanText.length, 0)
-//
-//        termsOfUse.movementMethod = LinkMovementMethod.getInstance()
-//        termsOfUse.setText(spanText, TextView.BufferType.SPANNABLE)
-//    }
+    private fun configTermsOfUse() {
+        val spanText = SpannableStringBuilder()
+        spanText.append(getString(R.string.login_terms_privacy1))
+        val terms2 = getString(R.string.login_terms_privacy2)
+        spanText.append(terms2)
+        spanText.setSpan(object : ClickableSpan() {
+            override fun onClick(widget: View) {
+                openUrl(url = getString(R.string.url_privacy_politics))
+            }
+
+            override fun updateDrawState(textPaint: TextPaint) {
+                textPaint.color = getColor(R.color.blue_200)
+                textPaint.isUnderlineText = false
+            }
+        }, spanText.length - terms2.length, spanText.length, 0)
+
+        checkButton?.movementMethod = LinkMovementMethod.getInstance()
+        checkButton?.setText(spanText, TextView.BufferType.SPANNABLE)
+    }
 
     private fun isValidPassword(pass: String): Boolean {
         if (pass != "Mundo") {

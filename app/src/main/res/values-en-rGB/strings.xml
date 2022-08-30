@@ -19,6 +19,9 @@
     <string name="subtitle">Forgot password</string>
     <string name="subtitle1">Login with your username:</string>
     <string name="subtitle2">Remember that you can also access through:</string>
-    <string name="checkBox">Accept terms and conditions</string>
+    <string name="login_terms_privacy1">I have read and accepted the&#160;</string>
+    <string name="login_terms_privacy2">privacy policies.</string>
+    <string name="url_forgot_password">https://es.dragon-ball-official.com/</string>
+    <string name="url_privacy_politics">https://terminosycondiciones.es/</string>
     <string name="welcome_messages">You pressed the button %1$s</string>
 </resources>
