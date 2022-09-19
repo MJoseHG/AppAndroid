@@ -24,4 +24,7 @@
     <string name="url_forgot_password">https://es.dragon-ball-official.com/</string>
     <string name="url_privacy_politics">https://terminosycondiciones.es/</string>
     <string name="welcome_messages">You pressed the button %1$s</string>
+    <string name="create_login">User %1$s create</string>
+    <string name="error_login">User or password invalid</string>
+    <string name="correct_login">User %1$s has been created</string>
 </resources>

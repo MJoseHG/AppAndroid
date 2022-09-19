@@ -1,4 +1,4 @@
-package com.example.myfirstapplication
+package com.example.myfirstapplication.ui
 
 import android.content.Intent
 import android.net.Uri
@@ -15,6 +15,10 @@ import android.widget.CheckBox
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.room.Room
+import com.example.myfirstapplication.R
+import com.example.myfirstapplication.data.database.AppDatabase
+import com.example.myfirstapplication.data.database.entities.User
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -105,11 +109,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun isValidUser(user: String): Boolean {
-        if (user != "Hola") {
+        if (user.isEmpty()) {
             usernameTil!!.error = getString(R.string.error)
             return false
         } else {
             usernameTil!!.error = null
+        }
+        return true
+    }
+
+    private fun isValidPassword(pass: String): Boolean {
+        if (pass.isEmpty()) {
+            passwordTil!!.error = getString(R.string.error)
+            return false
+        } else {
+            passwordTil!!.error = null
         }
         return true
     }
@@ -140,16 +154,6 @@ class MainActivity : AppCompatActivity() {
         checkButton?.setText(spanText, TextView.BufferType.SPANNABLE)
     }
 
-    private fun isValidPassword(pass: String): Boolean {
-        if (pass != "Mundo") {
-            passwordTil!!.error = getString(R.string.error)
-            return false
-        } else {
-            passwordTil!!.error = null
-        }
-        return true
-    }
-
     private fun notEmptyText() {
         val usernameEmptyText = usernameTie!!.text!!.isNotEmpty()
         val passwordEmptyText = passwordTie!!.text!!.isNotEmpty()
@@ -166,11 +170,7 @@ class MainActivity : AppCompatActivity() {
         val a = isValidUser(usernameText)
         val b = isValidPassword(passwordText)
         if (a && b) {
-            alert.setTitle(resources.getString(R.string.title_Ok))
-            alert.setMessage(resources.getString(R.string.supporting_text_Ok))
-            alert.setPositiveButton(resources.getString(R.string.accept)) { dialog, which ->
-            }
-                .show()
+            checkUser(usernameText, passwordText)
         } else {
             alert.setTitle(resources.getString(R.string.title_Ko))
             alert.setMessage(resources.getString(R.string.supporting_text_Ko))
@@ -178,6 +178,31 @@ class MainActivity : AppCompatActivity() {
             }
                 .show()
         }
+    }
+
+    private fun checkUser(userName: String, password: String) {
+        //TODO Iniciar Room
+        val db = Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java, "database-login"
+        ).build()
+        //TODO Traer todos los usuarios guardados
+        val userDao = db.userDao()
+        val users: List<User> = userDao.getAll()
+        //TODO Comprobar que el usuario y password coinciden o no con los guardados
+        users.forEach { user ->
+            if (userName != user.userName && password != user.passwordName)
+                userDao.insert(User(0, userName, password))
+            Toast.makeText(this, getString(R.string.create_login), Toast.LENGTH_LONG).show()
+            if (userName == user.userName && password == user.passwordName)
+                Toast.makeText(this, getString(R.string.correct_login), Toast.LENGTH_LONG).show()
+            else if (userName == user.userName && password != user.passwordName)
+                Toast.makeText(this, getString(R.string.error_login), Toast.LENGTH_LONG).show()
+        }
+
+        //TODO Mostrar mensaje en función del paso anterior
+
+
     }
 }
 
