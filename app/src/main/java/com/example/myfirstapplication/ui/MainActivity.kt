@@ -183,26 +183,31 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkUser(userName: String, password: String) {
-        //TODO Iniciar Room de su instancia
         val db = AppDatabase.getInstance(this)
-        //TODO Traer todos los usuarios guardados, ahora del repositorio
         val users = UserRepository.getUsers(db!!)
-        //TODO Esto vamos a ver cuando lo de antes funcione, que falla y que no
-        users?.forEach { user ->
-            if (userName != user.userName && password != user.passwordName) {
-                UserRepository.insert(User(0, userName, password), db)
-                Toast.makeText(this, getString(R.string.create_login), Toast.LENGTH_LONG).show()
+
+        var exist = false
+        if (users.isNullOrEmpty()) {
+            UserRepository.insert(User(0, userName, password), db)
+            Toast.makeText(this, getString(R.string.create_login), Toast.LENGTH_LONG).show()
+        } else {
+            users.forEach { user ->
+                if (userName == user.userName) {
+                    exist = true
+                    if (password == user.passwordName)
+                        Toast.makeText(this, getString(R.string.correct_login), Toast.LENGTH_LONG)
+                            .show()
+                    else
+                        Toast.makeText(this, getString(R.string.error_login), Toast.LENGTH_LONG)
+                            .show()
+                }
             }
-            if (userName == user.userName && password == user.passwordName) {
-                Toast.makeText(this, getString(R.string.correct_login), Toast.LENGTH_LONG).show()
-            }
-            else if (userName == user.userName && password != user.passwordName)
-                Toast.makeText(this, getString(R.string.error_login), Toast.LENGTH_LONG).show()
         }
 
-        //TODO Mostrar mensaje en función del paso anterior
-
-
+        if (!exist) {
+            UserRepository.insert(User(0, userName, password), db)
+            Toast.makeText(this, getString(R.string.create_login), Toast.LENGTH_LONG).show()
+        }
     }
 }
 
