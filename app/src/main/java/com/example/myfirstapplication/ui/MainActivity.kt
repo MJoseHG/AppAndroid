@@ -1,6 +1,7 @@
 package com.example.myfirstapplication.ui
 
 import android.content.Intent
+import android.content.res.Resources
 import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
@@ -15,7 +16,6 @@ import android.widget.CheckBox
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.room.Room
 import com.example.myfirstapplication.R
 import com.example.myfirstapplication.data.database.AppDatabase
 import com.example.myfirstapplication.data.database.entities.User
@@ -23,6 +23,7 @@ import com.example.myfirstapplication.data.database.repositories.UserRepository
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+
 
 //Aqui es appcompact para que tengamos el onresume, oncreate... etc
 class MainActivity : AppCompatActivity() {
@@ -186,16 +187,40 @@ class MainActivity : AppCompatActivity() {
         val db = AppDatabase.getInstance(this)
         val users = UserRepository.getUsers(db!!)
 
+//        Option TOP
+//        val user = users?.firstOrNull { it.userName == userName }
+//
+//        if (user == null){
+//            UserRepository.insert(User(0, userName, password), db)
+//            Toast.makeText(this, getString(R.string.create_login), Toast.LENGTH_LONG).show()
+//        } else {
+//            if (password == user.passwordName)
+//                Toast.makeText(this, getString(R.string.correct_login), Toast.LENGTH_LONG)
+//                    .show()
+//            else
+//                Toast.makeText(this, getString(R.string.error_login), Toast.LENGTH_LONG)
+//                    .show()
+//        }
+
+        val res: Resources = resources
         var exist = false
         if (users.isNullOrEmpty()) {
             UserRepository.insert(User(0, userName, password), db)
-            Toast.makeText(this, getString(R.string.create_login), Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                this,
+                String.format(res.getString(R.string.create_login), userName),
+                Toast.LENGTH_LONG
+            ).show()
         } else {
             users.forEach { user ->
                 if (userName == user.userName) {
                     exist = true
                     if (password == user.passwordName)
-                        Toast.makeText(this, getString(R.string.correct_login), Toast.LENGTH_LONG)
+                        Toast.makeText(
+                            this,
+                            String.format(res.getString(R.string.correct_login), userName),
+                            Toast.LENGTH_LONG
+                        )
                             .show()
                     else
                         Toast.makeText(this, getString(R.string.error_login), Toast.LENGTH_LONG)
@@ -206,7 +231,10 @@ class MainActivity : AppCompatActivity() {
 
         if (!exist) {
             UserRepository.insert(User(0, userName, password), db)
-            Toast.makeText(this, getString(R.string.create_login), Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                this, String.format(res.getString(R.string.create_login), userName),
+                Toast.LENGTH_LONG
+            ).show()
         }
     }
 }
