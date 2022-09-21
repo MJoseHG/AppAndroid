@@ -19,10 +19,12 @@ import androidx.room.Room
 import com.example.myfirstapplication.R
 import com.example.myfirstapplication.data.database.AppDatabase
 import com.example.myfirstapplication.data.database.entities.User
+import com.example.myfirstapplication.data.database.repositories.UserRepository
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
+//Aqui es appcompact para que tengamos el onresume, oncreate... etc
 class MainActivity : AppCompatActivity() {
     private var usernameTil: TextInputLayout? = null
     private var passwordTil: TextInputLayout? = null
@@ -181,21 +183,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkUser(userName: String, password: String) {
-        //TODO Iniciar Room
-        val db = Room.databaseBuilder(
-            applicationContext,
-            AppDatabase::class.java, "database-login"
-        ).build()
-        //TODO Traer todos los usuarios guardados
-        val userDao = db.userDao()
-        val users: List<User> = userDao.getAll()
-        //TODO Comprobar que el usuario y password coinciden o no con los guardados
-        users.forEach { user ->
-            if (userName != user.userName && password != user.passwordName)
-                userDao.insert(User(0, userName, password))
-            Toast.makeText(this, getString(R.string.create_login), Toast.LENGTH_LONG).show()
-            if (userName == user.userName && password == user.passwordName)
+        //TODO Iniciar Room de su instancia
+        val db = AppDatabase.getInstance(this)
+        //TODO Traer todos los usuarios guardados, ahora del repositorio
+        val users = UserRepository.getUsers(db!!)
+        //TODO Esto vamos a ver cuando lo de antes funcione, que falla y que no
+        users?.forEach { user ->
+            if (userName != user.userName && password != user.passwordName) {
+                UserRepository.insert(User(0, userName, password), db)
+                Toast.makeText(this, getString(R.string.create_login), Toast.LENGTH_LONG).show()
+            }
+            if (userName == user.userName && password == user.passwordName) {
                 Toast.makeText(this, getString(R.string.correct_login), Toast.LENGTH_LONG).show()
+            }
             else if (userName == user.userName && password != user.passwordName)
                 Toast.makeText(this, getString(R.string.error_login), Toast.LENGTH_LONG).show()
         }
