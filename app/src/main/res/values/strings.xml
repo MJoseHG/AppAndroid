@@ -26,5 +26,8 @@
     <string name="create_login">Usuario %1$s creado</string>
     <string name="error_login">Usuario o contraseña inválida</string>
     <string name="correct_login">Usuario %1$s ya ha sido creado</string>
+    <string name="view_users">Ver usuarios</string>
+    <string name="title_login">Login</string>
+    <string name="title_users">Usuarios</string>
 
 </resources>

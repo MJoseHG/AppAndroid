@@ -1,5 +1,6 @@
 package com.example.myfirstapplication.ui
 
+import android.content.ClipData
 import android.content.Intent
 import android.content.res.Resources
 import android.net.Uri
@@ -16,6 +17,8 @@ import android.widget.CheckBox
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.view.menu.ActionMenuItemView
+import androidx.appcompat.view.menu.MenuView
 import com.example.myfirstapplication.R
 import com.example.myfirstapplication.data.database.AppDatabase
 import com.example.myfirstapplication.data.database.entities.User
@@ -44,6 +47,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        supportActionBar?.hide()
 
         // Reference TILs
         usernameTil = findViewById<View>(R.id.usernameLayout) as TextInputLayout
@@ -64,6 +68,12 @@ class MainActivity : AppCompatActivity() {
         button05 = findViewById<View>(R.id.button5) as Button
 
         configTermsOfUse()
+
+        val viewUser=findViewById<ActionMenuItemView>(R.id.view_users)
+        viewUser.setOnClickListener {
+            val screen1 = Intent(this, UserActivity::class.java)
+            startActivity(screen1)
+        }
 
         usernameTie!!.addTextChangedListener(object : TextWatcher {
 

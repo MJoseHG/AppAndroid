@@ -7,6 +7,10 @@
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.203" />
         <entry key="app/src/main/res/font/roboto.xml" value="0.22447916666666667" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.23582356988287928" />
+        <entry key="app/src/main/res/layout/activity_users.xml" value="0.254201362417416" />
+        <entry key="app/src/main/res/layout/row_user.xml" value="0.2855293993435376" />
+        <entry key="app/src/main/res/menu/top_app_bar.xml" value="0.2732075737296337" />
+        <entry key="app/src/main/res/menu/top_bar_return.xml" value="0.1085934159897392" />
       </map>
     </option>
   </component>
